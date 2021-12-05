@@ -115,6 +115,7 @@ class Dataset:
         
         determine = np.ceil(np.max(wh*np.array(self.image_shape[::-1]),axis=-1)).astype(int)
         bboxes_order = np.argsort(determine)
+        determine = determine[bboxes_order]
         group = group[bboxes_order]
         center = center[bboxes_order]
         wh = wh[bboxes_order]
@@ -136,7 +137,7 @@ class Dataset:
             belonging = (cxcy*grid_count).astype(int)
             match_grid_center_coor = np.stack([grid_center_coor[belonging[:,0]],grid_center_coor[belonging[:,1]]],axis=-1)
 
-            center_offset = cxcy - match_grid_center_coor
+            center_offset = (cxcy - match_grid_center_coor) * grid_count * 2
             
             answer = np.concatenate([matched_group,center_offset,matched_wh,points_offset.reshape(-1,8)],axis=-1)
             object_map = np.zeros((grid_count,grid_count,1+(1+(2+2)+(4*2))))
