@@ -1,5 +1,5 @@
 dataset/
 official/
 **/.ipynb_checkpoints/
-notebook command.txt
 **/__pycache__/
+*.bat
